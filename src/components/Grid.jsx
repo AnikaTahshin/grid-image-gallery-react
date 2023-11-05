@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./Grid.css";
 const Grid = () => {
   const data = [
@@ -47,21 +47,24 @@ const Grid = () => {
       image: "../../assets/images/image-11.jpeg",
     },
   ];
-  const [images, setImages] = useState(data);
-  const [selectedImages, setSelectedImages] = useState([]);
-  const [checked, setChecked] = useState(false);
+  const [images, setImages] = useState(data); // variable for storing data
+  const [selectedImages, setSelectedImages] = useState([]); // variable for storing selected data
+  const [checked, setChecked] = useState(false); // checkbox toggle button
 
-  const dragItem = useRef();
-  const dragOverItem = useRef();
+  const dragItem = useRef(); // item to drag
+  const dragOverItem = useRef(); // item on which the dragged item will be dropped
 
+  // drag an item to drop
   const dragStart = (e, position) => {
     dragItem.current = position;
   };
 
+  // drop the item on selected place
   const dragEnter = (e, position) => {
     dragOverItem.current = position;
   };
 
+  // drop the item
   const drop = (e) => {
     const copyListItems = [...images];
     const dragItemContent = copyListItems[dragItem.current];
@@ -72,6 +75,7 @@ const Grid = () => {
     setImages(copyListItems);
   };
 
+  // to select an item
   const handleClick = (item) => {
     setChecked(true);
 
@@ -82,11 +86,13 @@ const Grid = () => {
     }
   };
 
+  // to delete the selected items
   const handleDelete = () => {
     setImages((prevImages) => {
       return prevImages.filter((image) => !selectedImages.includes(image.id));
     });
     setSelectedImages([]);
+    setChecked(false);
   };
 
   return (
