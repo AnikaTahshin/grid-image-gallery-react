@@ -132,6 +132,8 @@ const Grid = () => {
           </div>
         </div>
       )}
+
+      <hr />
       <div className="angry-grid">
         {images.map((item, index) => (
           <div
